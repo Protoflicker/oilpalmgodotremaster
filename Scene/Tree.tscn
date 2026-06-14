@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce7kun3axgivb"]
+
+[ext_resource type="Script" uid="uid://cix5mto7iuouh" path="res://Script/Tree.gd" id="1_72j6q"]
+[ext_resource type="PackedScene" uid="uid://fihfib6eqs53" path="res://Scene/fruit.tscn" id="2_72j6q"]
+[ext_resource type="PackedScene" uid="uid://b2quauiv873h3" path="res://3D Asset/Pohon_Sawit_LowMesh.gltf" id="3_1l8h6"]
+[ext_resource type="PackedScene" uid="uid://8577xvcn1iun" path="res://3D Asset/Pohon_Sawit.gltf" id="3_72j6q"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dn7q5"]
+height = 3.79779
+
+[node name="Pohon_Sawit" type="Node3D"]
+script = ExtResource("1_72j6q")
+fruit_scene = ExtResource("2_72j6q")
+min_ripe_chance = 0.1
+max_ripe_chance = 1.0
+tree_model_low = ExtResource("3_1l8h6")
+
+[node name="3d model Pohon_Sawit" parent="." instance=ExtResource("3_72j6q")]
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(0.978077, 0.133446, 0.158933, 0.000198052, -0.768319, 0.645494, 0.208245, -0.626041, -0.747079, -0.0750002, 4.49486, 0.509999)
+
+[node name="Marker3D2" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(-0.00324059, -0.640103, -0.763795, -0.0018844, -0.768315, 0.645498, -0.999992, 0.00350161, 0.00127603, 0.524999, 4.53486, -0.016)
+
+[node name="Marker3D3" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(0.706157, -0.45365, -0.54046, -0.000780518, -0.768319, 0.645494, -0.708056, -0.451597, -0.539713, 0.3405, 4.49735, 0.395)
+
+[node name="Marker3D4" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(0.571979, 0.626707, 0.524837, 0.00052657, -0.645498, 0.768315, 0.820271, -0.436597, -0.366456, -0.455002, 4.40488, 0.29)
+
+[node name="Marker3D5" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(-0.681537, -0.559125, -0.468198, 0.000439224, -0.645498, 0.768315, -0.731785, 0.520348, 0.436503, 0.405, 4.40986, -0.375)
+
+[node name="Marker3D6" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(-0.865592, 0.320866, 0.382195, -0.000504957, -0.768319, 0.645494, 0.500753, 0.553881, 0.661298, -0.295, 4.48489, -0.430002)
+
+[node name="Marker3D7" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(-0.0841974, 0.637948, 0.760992, -0.00172673, -0.768315, 0.645494, 0.996447, 0.0525924, 0.0654045, -0.523002, 4.50637, -0.114445)
+
+[node name="Marker3D8" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(-0.998964, -0.033735, -0.0303162, 2.74946e-05, -0.671786, 0.745533, -0.0455151, 0.74001, 0.66582, 0.03, 4.37987, -0.539999)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.15, 0, 0, 0, 1, 0, 0, 0, 1.15, 0, 1.85, 0)
+shape = SubResource("CylinderShape3D_dn7q5")

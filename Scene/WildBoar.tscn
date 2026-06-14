@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6uvgqkx66ky5"]
+
+[ext_resource type="Script" uid="uid://bwj21657lasqp" path="res://Script/WildBoar.gd" id="1_3c3h6"]
+[ext_resource type="PackedScene" uid="uid://cx7n50gw1a0jm" path="res://3D Asset/Babi Hutan.gltf" id="2_6pj0q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3c3h6"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_3c3h6")
+
+[node name="Babi Hutan" parent="." instance=ExtResource("2_6pj0q")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_3c3h6")

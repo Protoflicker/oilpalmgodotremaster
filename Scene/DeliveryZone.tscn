@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://db0s0h54nq8sx"]
+
+[ext_resource type="Script" uid="uid://cdopw8tuc7t5i" path="res://Script/DeliveryZone.gd" id="1_govq6"]
+[ext_resource type="PackedScene" uid="uid://b7t6uyhb6n7yw" path="res://3D Asset/L300.gltf" id="2_bt8su"]
+[ext_resource type="PackedScene" uid="uid://8jlbfvffn8ah" path="res://3D Asset/Muatan/Muat Sawit_1.gltf" id="3_euxuw"]
+[ext_resource type="PackedScene" uid="uid://5ylmfjo0n8ho" path="res://3D Asset/Muatan/Muat Sawit_2.gltf" id="4_6w5ri"]
+[ext_resource type="PackedScene" uid="uid://dwe2n6dahwmg3" path="res://3D Asset/Muatan/Muat Sawit_3.gltf" id="5_pgwep"]
+[ext_resource type="PackedScene" uid="uid://cbif4gq7obi8m" path="res://3D Asset/Muatan/Muat Sawit_4.gltf" id="6_1u3sj"]
+[ext_resource type="PackedScene" uid="uid://dfimp5x6shv7l" path="res://3D Asset/Muatan/Muat Sawit_5.gltf" id="7_o7vyh"]
+[ext_resource type="PackedScene" uid="uid://c7yvsmvjavwu1" path="res://3D Asset/Muatan/Muat Sawit_1_Low Mesh.gltf" id="7_om3nj"]
+[ext_resource type="PackedScene" uid="uid://dmybfkjmgs47e" path="res://3D Asset/Muatan/Muat Sawit_2_Low Mesh.gltf" id="8_nrvod"]
+[ext_resource type="PackedScene" uid="uid://tdi1jeowai3f" path="res://3D Asset/Muatan/Muat Sawit_3_Low Mesh.gltf" id="9_ar4fb"]
+[ext_resource type="PackedScene" uid="uid://hft3axetm0kh" path="res://3D Asset/Muatan/Muat Sawit_4_Low Mesh.gltf" id="10_o5r2j"]
+[ext_resource type="PackedScene" uid="uid://v3xmwy2yfl73" path="res://3D Asset/Muatan/Muat Sawit_5_Low Mesh.gltf" id="11_r8m4b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bt8su"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nbq77"]
+
+[node name="Area3D" type="Area3D" unique_id=1197984833]
+script = ExtResource("1_govq6")
+lod_models_high = Array[PackedScene]([ExtResource("3_euxuw"), ExtResource("4_6w5ri"), ExtResource("5_pgwep"), ExtResource("6_1u3sj"), ExtResource("7_o7vyh")])
+lod_models_low = Array[PackedScene]([ExtResource("7_om3nj"), ExtResource("8_nrvod"), ExtResource("9_ar4fb"), ExtResource("10_o5r2j"), ExtResource("11_r8m4b")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1668497096]
+transform = Transform3D(7.5, 0, 0, 0, 1, 0, 0, 0, 4.5, -0.4, 0, 0)
+shape = SubResource("BoxShape3D_bt8su")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=190465549]
+
+[node name="L300" parent="StaticBody3D" unique_id=223262944 instance=ExtResource("2_bt8su")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1147818170]
+transform = Transform3D(5, 0, 0, 0, 2.15, 0, 0, 0, 2.15, -0.4, 0, 0)
+shape = SubResource("BoxShape3D_nbq77")

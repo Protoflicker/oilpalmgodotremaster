@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cuasqu4c5hagm"]
+
+[ext_resource type="Script" path="res://Script/HidingBush.gd" id="1_bush"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bush"]
+radius = 1.7
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_bush"]
+albedo_color = Color(0.094, 0.21, 0.086, 1)
+roughness = 0.95
+
+[sub_resource type="BoxShape3D" id="Box_bush"]
+size = Vector3(3.2, 2.4, 3.2)
+
+[node name="HidingBush" type="Area3D"]
+script = ExtResource("1_bush")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.62, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("SphereMesh_bush")
+surface_material_override/0 = SubResource("Mat_bush")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Box_bush")

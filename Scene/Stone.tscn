@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://clecpmf2ddnfc"]
+
+[ext_resource type="Script" path="res://Script/Stone.gd" id="1_stone"]
+[ext_resource type="PackedScene" uid="uid://carj7rdme2w64" path="res://3D Asset/Batu.gltf" id="2_batu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_stone"]
+radius = 0.25
+
+[node name="Stone" type="RigidBody3D"]
+script = ExtResource("1_stone")
+
+[node name="Batu" parent="." instance=ExtResource("2_batu")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_stone")

@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://cro4dsaaw46m6"]
+
+[ext_resource type="Script" uid="uid://xrqu7ocbd6ce" path="res://Script/PlayerController.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://bpfyr0a0ogs5x" path="res://Script/Player.gd" id="1_xhfnw"]
+[ext_resource type="PackedScene" uid="uid://cldfugbgjbpxy" path="res://3D Asset/Egrek.glb" id="3_e80uo"]
+[ext_resource type="Script" uid="uid://d2113ln4fmisb" path="res://Script/InteractionSystem.gd" id="4_cxr5p"]
+[ext_resource type="PackedScene" uid="uid://bu7l6p1cy8jms" path="res://3D Asset/Tojok.gltf" id="4_pmp2f"]
+[ext_resource type="PackedScene" uid="uid://djp540k43ism2" path="res://3D Asset/Ketapel.gltf" id="5_pmp2f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_xhfnw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_0rwas")
+
+[node name="PlayerController" type="Node3D" parent="."]
+script = ExtResource("1_kpjcp")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerController"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+current = true
+
+[node name="Egrek" parent="PlayerController/Camera3D" instance=ExtResource("3_e80uo")]
+transform = Transform3D(0.702415, 0.123855, -0.700909, 0.690261, 0.121712, 0.71325, 0.173648, -0.984807, -3.06377e-08, 0.2, -0.4, 1.1)
+
+[node name="Tojok" parent="PlayerController/Camera3D" instance=ExtResource("4_pmp2f")]
+transform = Transform3D(0.774992, 0.108918, 0.622514, 0.616456, 0.0866373, -0.782608, -0.139173, 0.990268, -2.7211e-08, 0.18, -0.15, -0.735)
+visible = false
+
+[node name="Ketapel" parent="PlayerController/Camera3D" instance=ExtResource("5_pmp2f")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.35, -0.4, -0.65)
+visible = false
+
+[node name="InteractionSystem" type="Node3D" parent="."]
+script = ExtResource("4_cxr5p")

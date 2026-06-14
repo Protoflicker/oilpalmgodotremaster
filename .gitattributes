@@ -1,0 +1,3 @@
+# Normalize EOL for all files that Git considers text files.
+* text=auto eol=lf
+# NOTE: Git LFS disabled — assets are stored as normal Git objects (all < 100MB).

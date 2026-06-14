@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhbm0jpubxbq7"]
+
+[ext_resource type="Script" uid="uid://dp1j1um5fotyb" path="res://Script/Genangan.gd" id="1_k4dmu"]
+[ext_resource type="Texture2D" uid="uid://8rtmryiugf23" path="res://Genangan.png" id="2_h4hcu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vag0k"]
+
+[node name="GenanganAir" type="Area3D"]
+script = ExtResource("1_k4dmu")
+slow_percentage = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 2, 0, 0, 0, 4.75, 0, 0, 0)
+shape = SubResource("BoxShape3D_vag0k")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, -8.74228e-09, 0.2, 0, -0.2, -8.74228e-09, 0, 0.05, 0)
+texture = ExtResource("2_h4hcu")

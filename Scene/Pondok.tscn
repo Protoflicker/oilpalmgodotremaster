@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dabyj4c1iis45"]
+
+[ext_resource type="Script" path="res://Script/Pondok.gd" id="1_pondok"]
+
+[node name="Pondok" type="StaticBody3D"]
+script = ExtResource("1_pondok")

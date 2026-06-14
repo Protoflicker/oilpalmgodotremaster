@@ -1,0 +1,47 @@
+# Godot 4 engine cache (regenerated on import — must NOT be committed)
+.godot/
+
+# Godot-specific ignores
+*.import/
+export.cfg
+export_presets.cfg
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# Temp / lock artifacts (e.g. GExtension dll copy attempts)
+*.TMP
+*.tmp
+~*
+
+# Unused/broken addons (not enabled; ship Git-LFS .exr brushes + missing native libs)
+addons/terrain_3d/
+addons/zylann.hterrain/
+
+# Duplicate/unused sky HDR copies (the real, referenced ones live in res/)
+/kloofendal_48d_partly_cloudy_puresky_4k.hdr
+/kloofendal_48d_partly_cloudy_puresky_4k.hdr.import
+/overcast_soil_puresky_4k.hdr
+/overcast_soil_puresky_4k.hdr.import
+/Scene/overcast_soil_puresky_4k.hdr
+/Scene/overcast_soil_puresky_4k.hdr.import
+/Script/overcast_soil_puresky_4k.hdr
+/Script/overcast_soil_puresky_4k.hdr.import
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+
+# System/tool-specific ignores
+*.orig
+*.log
+*.pdb
+*.idb
+*.opendb
+*.pidb
+*.db
+*.tps

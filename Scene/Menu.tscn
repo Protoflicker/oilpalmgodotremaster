@@ -1,0 +1,127 @@
+[gd_scene load_steps=10 format=3 uid="uid://ddjy0kbrl7skn"]
+
+[ext_resource type="Script" path="res://Script/menu.gd" id="1_qnob0"]
+[ext_resource type="Texture2D" uid="uid://cqfhne1ipw2fm" path="res://UIux/Large Buttons/Large Buttons/Play Button.png" id="2_lffvd"]
+[ext_resource type="Texture2D" uid="uid://djqllfmvgn0vw" path="res://UIux/Large Buttons/Large Buttons/Options Button.png" id="3_by0sq"]
+[ext_resource type="Texture2D" uid="uid://b2p8ydaxisqyx" path="res://UIux/Large Buttons/Large Buttons/Quit Button.png" id="4_ky605"]
+[ext_resource type="Texture2D" uid="uid://cfve1d8lj0kkg" path="res://Scene/FONT/3.PNG" id="5_6q48h"]
+[ext_resource type="Texture2D" uid="uid://b07ysofwvrbk0" path="res://FONT/Capture.PNG" id="6_d64n0"]
+[ext_resource type="Texture2D" uid="uid://b26ik08dx7bjv" path="res://FONT/Daun.png" id="6_r7rek"]
+[ext_resource type="FontFile" uid="uid://daupq2ig3jg5q" path="res://Scene/FONT/Colorfiction - Sketch.otf" id="7_d64n0"]
+[ext_resource type="Texture2D" uid="uid://dwg4tekit8471" path="res://FONT/sawit.png" id="9_5csvr"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.9999
+offset_top = 160.0
+offset_right = -14.9999
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(6.30794, 5.12758)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_qnob0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -47.7177
+offset_top = -57.3369
+offset_right = 560.282
+offset_bottom = 574.663
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.158384, 0.186757)
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("2_lffvd")
+
+[node name="OptionButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_by0sq")
+flat = true
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+icon = ExtResource("4_ky605")
+
+[node name="3" type="Sprite2D" parent="VBoxContainer"]
+z_index = -88
+position = Vector2(304.281, 129.488)
+scale = Vector2(1.70532, 1.90707)
+texture = ExtResource("5_6q48h")
+
+[node name="Daun" type="Sprite2D" parent="VBoxContainer"]
+z_index = -99
+position = Vector2(756.7, -172.304)
+rotation = -1.01344
+scale = Vector2(0.168968, 0.324009)
+texture = ExtResource("6_r7rek")
+
+[node name="Daun3" type="Sprite2D" parent="VBoxContainer"]
+z_index = -1
+position = Vector2(-3.00152, -344.608)
+rotation = -2.77524
+scale = Vector2(0.168968, 0.324009)
+texture = ExtResource("6_r7rek")
+
+[node name="Daun5" type="Sprite2D" parent="VBoxContainer"]
+z_index = -99
+position = Vector2(-173.159, 601.496)
+rotation = -3.82458
+scale = Vector2(0.168968, 0.324009)
+texture = ExtResource("6_r7rek")
+
+[node name="Daun2" type="Sprite2D" parent="VBoxContainer"]
+z_index = -1
+position = Vector2(-184.169, 224.517)
+rotation = -2.92218
+scale = Vector2(0.432762, 0.665376)
+texture = ExtResource("6_r7rek")
+
+[node name="Daun4" type="Sprite2D" parent="VBoxContainer"]
+z_index = -1
+position = Vector2(769.712, 480.361)
+rotation = -0.508641
+scale = Vector2(0.432762, 0.665376)
+texture = ExtResource("6_r7rek")
+
+[node name="Capture" type="Sprite2D" parent="."]
+z_index = -100
+position = Vector2(76.5701, -30.8138)
+scale = Vector2(0.330871, 0.508754)
+texture = ExtResource("6_d64n0")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -54.0
+offset_top = -126.0
+offset_right = 56.0
+offset_bottom = -73.0
+scale = Vector2(0.387299, 0.454235)
+theme_override_fonts/font = ExtResource("7_d64n0")
+theme_override_font_sizes/font_size = 50
+text = "    S    WIT 
+HARVESTER"
+
+[node name="Sawit" type="Sprite2D" parent="."]
+position = Vector2(-12.841, -110.969)
+rotation = -0.142137
+scale = Vector2(0.0233338, 0.0246138)
+texture = ExtResource("9_5csvr")
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

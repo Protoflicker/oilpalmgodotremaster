@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqcq3enyp6flg"]
+
+[ext_resource type="Script" uid="uid://cjii60vkmkyfj" path="res://Script/menu_level_1.gd" id="1_4d45e"]
+[ext_resource type="Texture2D" uid="uid://civqty4unfaf7" path="res://FONT/lev.PNG" id="2_twpwu"]
+[ext_resource type="Texture2D" uid="uid://cfve1d8lj0kkg" path="res://Scene/FONT/3.PNG" id="3_pso7a"]
+[ext_resource type="Texture2D" uid="uid://b26ik08dx7bjv" path="res://FONT/Daun.png" id="4_7iom4"]
+[ext_resource type="Texture2D" uid="uid://b07ysofwvrbk0" path="res://FONT/Capture.PNG" id="5_mvcvh"]
+[ext_resource type="Texture2D" uid="uid://dwg4tekit8471" path="res://FONT/sawit.png" id="7_ild3v"]
+[ext_resource type="Texture2D" uid="uid://g8yl4dh1pxik" path="res://FONT/next.PNG" id="8_r6a7i"]
+[ext_resource type="Texture2D" uid="uid://c8dpp1gepvxj6" path="res://Scene/FONT/next - Copy.PNG" id="9_pso7a"]
+[ext_resource type="FontFile" uid="uid://bu4yj2c0kckej" path="res://Scene/FONT/Colorfiction - Messy.otf" id="9_twpwu"]
+
+[node name="Levelmenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = -6.0
+offset_right = 17.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.000814229
+scale = Vector2(0.998791, 0.999999)
+script = ExtResource("1_4d45e")
+
+[node name="Lev" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(959.105, 328.043)
+texture = ExtResource("2_twpwu")
+
+[node name="3" type="Sprite2D" parent="."]
+position = Vector2(959.105, 559.043)
+scale = Vector2(1.40316, 0.732112)
+texture = ExtResource("3_pso7a")
+
+[node name="Daun" type="Sprite2D" parent="."]
+position = Vector2(1222.1, 308.043)
+rotation = -0.3242
+scale = Vector2(0.245246, 0.306548)
+texture = ExtResource("4_7iom4")
+
+[node name="Daun2" type="Sprite2D" parent="."]
+position = Vector2(690.105, 294.043)
+rotation = -3.04763
+scale = Vector2(0.245246, 0.306548)
+texture = ExtResource("4_7iom4")
+
+[node name="Capture" type="Sprite2D" parent="."]
+z_index = -99
+position = Vector2(334.487, 598.742)
+scale = Vector2(-2.33339, 2.8436)
+texture = ExtResource("5_mvcvh")
+
+[node name="Sawit" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(648.205, 711.528)
+rotation = -0.835279
+scale = Vector2(0.233573, 0.270261)
+texture = ExtResource("7_ild3v")
+
+[node name="Sawit2" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1248.96, 682.017)
+rotation = 0.831175
+scale = Vector2(0.233573, 0.270261)
+texture = ExtResource("7_ild3v")
+
+[node name="level1" type="Button" parent="."]
+layout_mode = 0
+offset_left = 966.59
+offset_top = 710.787
+offset_right = 1083.59
+offset_bottom = 804.787
+scale = Vector2(1.97294, 1.13421)
+icon = ExtResource("8_r6a7i")
+
+[node name="backmenu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 713.282
+offset_top = 712.581
+offset_right = 830.282
+offset_bottom = 806.581
+scale = Vector2(1.92436, 1.14319)
+icon = ExtResource("9_pso7a")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.067
+anchor_bottom = 0.075
+offset_left = 905.764
+offset_top = 406.737
+offset_right = 905.124
+offset_bottom = 598.737
+theme_override_fonts/font = ExtResource("9_twpwu")
+theme_override_font_sizes/font_size = 200
+text = "1"
+
+[connection signal="pressed" from="level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="backmenu" to="." method="_on_backmenu_pressed"]

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 300 \"/c/Users/vboxuser/Desktop/Godot_v4.6.3-stable_win64.exe\" --headless --import --path \"c:/Users/vboxuser/Documents/oil-palm-godot-main\")",
+      "Bash(echo \"=== exit: $? ===\")",
+      "Bash(timeout 200 \"/c/Users/vboxuser/Desktop/Godot_v4.6.3-stable_win64.exe\" --headless --import --path \"c:/Users/vboxuser/Documents/oil-palm-godot-main\")",
+      "Bash(timeout 180 \"/c/Users/vboxuser/Desktop/Godot_v4.6.3-stable_win64.exe\" --headless --path \"c:/Users/vboxuser/Documents/oil-palm-godot-main\" -s res://verify_load.gd)",
+      "Bash(timeout 12 \"/c/Users/vboxuser/Desktop/Godot_v4.6.3-stable_win64.exe\" --headless --path \"c:/Users/vboxuser/Documents/oil-palm-godot-main\")",
+      "Bash(rm -f verify_load.gd verify_load.gd.uid)",
+      "Bash(ls verify_load.gd)"
+    ]
+  }
+}

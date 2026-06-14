@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://fjp4d5gsnx0v"]
+
+[ext_resource type="Script" uid="uid://c5rots8intces" path="res://Script/HarvesterNPC.gd" id="1_g7xgt"]
+[ext_resource type="PackedScene" uid="uid://cop12piknp46n" path="res://3D Asset/Maling.gltf" id="2_eyq3o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g7xgt"]
+
+[node name="HarvesterNPC" type="CharacterBody3D"]
+script = ExtResource("1_g7xgt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 1.1, 0)
+shape = SubResource("CapsuleShape3D_g7xgt")
+
+[node name="Maling" parent="." instance=ExtResource("2_eyq3o")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.1, 0)
