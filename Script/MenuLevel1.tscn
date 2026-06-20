@@ -55,9 +55,9 @@ texture = ExtResource("5_mvcvh")
 
 [node name="level1" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1105.0
+offset_left = 850.0
 offset_top = 710.787
-offset_right = 1222.0
+offset_right = 967.0
 offset_bottom = 804.787
 scale = Vector2(1.97294, 1.13421)
 icon = ExtResource("8_r6a7i")
@@ -86,9 +86,9 @@ text = "1"
 
 [node name="NextLevelButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 855.0
+offset_left = 1130.0
 offset_top = 724.0
-offset_right = 1045.0
+offset_right = 1330.0
 offset_bottom = 798.0
 theme_override_fonts/font = ExtResource("9_twpwu")
 theme_override_font_sizes/font_size = 34

@@ -219,13 +219,27 @@ texture = ExtResource("6_h1m5p")
 [node name="OptionsButton" type="Button" parent="PauseMenu" unique_id=264228404]
 z_index = 11
 layout_mode = 0
-offset_left = 740.0
-offset_top = 130.0
-offset_right = 1180.0
-offset_bottom = 198.0
+offset_left = 710.0
+offset_top = 115.0
+offset_right = 1193.0
+offset_bottom = 710.0
+scale = Vector2(1.14275, 0.275012)
 theme_override_fonts/font = ExtResource("2_10rq1")
-theme_override_font_sizes/font_size = 48
-text = "Pengaturan"
+icon = ExtResource("3_ujxo0")
+
+[node name="OptionsLabel" type="Label" parent="PauseMenu"]
+z_index = 12
+layout_mode = 0
+offset_left = 795.0
+offset_top = 123.0
+offset_right = 1152.0
+offset_bottom = 250.0
+scale = Vector2(1.06413, 1.15993)
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_10rq1")
+theme_override_font_sizes/font_size = 90
+text = "Options"
+horizontal_alignment = 1
 
 [node name="RoundEndPanel" type="Control" parent="." unique_id=770667414]
 layout_mode = 1
