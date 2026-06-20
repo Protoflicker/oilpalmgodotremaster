@@ -143,9 +143,9 @@ icon = ExtResource("3_ujxo0")
 [node name="QuitButton" type="Button" parent="PauseMenu" unique_id=1906415644]
 layout_mode = 0
 offset_left = 708.0
-offset_top = 660.0
+offset_top = 824.0
 offset_right = 1191.0
-offset_bottom = 1255.0
+offset_bottom = 1419.0
 scale = Vector2(1.1344, 0.307614)
 icon = ExtResource("3_ujxo0")
 
@@ -163,9 +163,9 @@ text = "Resume"
 [node name="Resume2" type="Label" parent="PauseMenu" unique_id=729740905]
 layout_mode = 0
 offset_left = 827.0
-offset_top = 679.0
+offset_top = 836.0
 offset_right = 1184.0
-offset_bottom = 806.0
+offset_bottom = 963.0
 scale = Vector2(1.06413, 1.15993)
 theme_override_fonts/font = ExtResource("2_10rq1")
 theme_override_font_sizes/font_size = 100
@@ -185,8 +185,8 @@ text = "restart"
 
 [node name="Restart2" type="Sprite2D" parent="PauseMenu" unique_id=1972397817]
 z_index = -9
-position = Vector2(984, 593)
-scale = Vector2(1.62105, 1.26405)
+position = Vector2(984, 605)
+scale = Vector2(1.62105, 1.52)
 texture = ExtResource("3_ujxo0")
 
 [node name="Daun" type="Sprite2D" parent="PauseMenu" unique_id=1520445855]
@@ -220,20 +220,20 @@ texture = ExtResource("6_h1m5p")
 z_index = 11
 layout_mode = 0
 offset_left = 710.0
-offset_top = 115.0
+offset_top = 644.0
 offset_right = 1193.0
-offset_bottom = 710.0
+offset_bottom = 1239.0
 scale = Vector2(1.14275, 0.275012)
 theme_override_fonts/font = ExtResource("2_10rq1")
 icon = ExtResource("3_ujxo0")
 
-[node name="OptionsLabel" type="Label" parent="PauseMenu"]
+[node name="OptionsLabel" type="Label" parent="PauseMenu" unique_id=1713934021]
 z_index = 12
 layout_mode = 0
 offset_left = 795.0
-offset_top = 123.0
+offset_top = 652.0
 offset_right = 1152.0
-offset_bottom = 250.0
+offset_bottom = 779.0
 scale = Vector2(1.06413, 1.15993)
 mouse_filter = 2
 theme_override_fonts/font = ExtResource("2_10rq1")

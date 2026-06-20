@@ -61,6 +61,7 @@ const STRINGS := {
 		"press_key": "Tekan tombol...",
 		"locked": "TERKUNCI",
 		"next": "NEXT",
+		"enter": "MASUK",
 		# Aksi kontrol
 		"act_move_forward": "Maju",
 		"act_move_back": "Mundur",
@@ -120,6 +121,7 @@ const STRINGS := {
 		"press_key": "Press a key...",
 		"locked": "LOCKED",
 		"next": "NEXT",
+		"enter": "ENTER",
 		"act_move_forward": "Forward",
 		"act_move_back": "Backward",
 		"act_move_left": "Left",

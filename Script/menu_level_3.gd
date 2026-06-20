@@ -1,4 +1,6 @@
 extends Control
+## Tombol TENGAH = MASUK Level 3 (terkunci sampai Level 3 terbuka).
+## Tombol KANAN = NEXT → Level 4 (terkunci sampai Level 4 terbuka). KIRI = Back.
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -6,22 +8,20 @@ func _ready():
 	_update_locks()
 
 func _update_locks() -> void:
-	# Tombol MASUK (kanan) Level 3 terkunci sampai Level 3 terbuka.
-	var play := get_node_or_null("level1") as Button
-	if play:
-		play.disabled = not GameState.is_unlocked(3)
-	# NEXT (tengah) di sini menuju Level 4 (langsung) — terkunci sampai Level 4 terbuka.
-	var nxt := get_node_or_null("NextLevelButton") as Button
-	if nxt:
-		var unlocked := GameState.is_unlocked(4)
-		nxt.disabled = not unlocked
-		nxt.text = "LEVEL 4" if unlocked else Loc.t("locked")
+	var enter_btn := get_node_or_null("NextLevelButton") as Button
+	if enter_btn:
+		var unlocked := GameState.is_unlocked(3)
+		enter_btn.disabled = not unlocked
+		enter_btn.text = Loc.t("enter") if unlocked else Loc.t("locked")
+	var next_btn := get_node_or_null("level1") as Button
+	if next_btn:
+		next_btn.disabled = not GameState.is_unlocked(4)
 
-func _on_level_1_pressed() -> void:
+func _on_enter_pressed() -> void:
 	if GameState.is_unlocked(3):
 		get_tree().change_scene_to_file("res://Scene/Level3.tscn")
 
-func _on_next_level_pressed() -> void:
+func _on_next_pressed() -> void:
 	if GameState.is_unlocked(4):
 		get_tree().change_scene_to_file("res://Scene/Level4.tscn")
 

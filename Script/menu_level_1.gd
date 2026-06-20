@@ -1,4 +1,6 @@
 extends Control
+## Level select. Tombol TENGAH (NextLevelButton, teks) = MASUK level.
+## Tombol KANAN (level1, ikon panah) = NEXT (ke layar level berikutnya). KIRI = Back.
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -6,22 +8,20 @@ func _ready() -> void:
 	_update_locks()
 
 func _update_locks() -> void:
-	# Tombol MASUK (kanan) level 1 selalu terbuka.
-	var play := get_node_or_null("level1") as Button
-	if play:
-		play.disabled = false
-	# Tombol NEXT (tengah) bebas untuk menelusuri level berikutnya.
-	var nxt := get_node_or_null("NextLevelButton") as Button
-	if nxt:
-		nxt.disabled = false
-		nxt.text = Loc.t("next")
+	# MASUK (tengah) Level 1 selalu terbuka.
+	var enter_btn := get_node_or_null("NextLevelButton") as Button
+	if enter_btn:
+		enter_btn.disabled = false
+		enter_btn.text = Loc.t("enter")
+	# NEXT (kanan) bebas untuk telusuri Level berikutnya.
+	var next_btn := get_node_or_null("level1") as Button
+	if next_btn:
+		next_btn.disabled = false
 
-func _on_level_1_pressed() -> void:
-	# MASUK ke Level 1.
+func _on_enter_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scene/Level.tscn")
 
-func _on_next_level_pressed() -> void:
-	# Telusuri layar pilih Level berikutnya.
+func _on_next_pressed() -> void:
 	get_tree().change_scene_to_file("res://Script/MenuLevel2.tscn")
 
 func _on_backmenu_pressed() -> void:
