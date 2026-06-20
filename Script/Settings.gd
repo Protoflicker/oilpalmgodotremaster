@@ -11,11 +11,51 @@ var sfx_volume: float = 1.0
 var mouse_sensitivity: float = 0.075
 var fullscreen: bool = false
 
+# Aksi yang bisa di-rebind di Options (urutan tampil).
+const REBINDABLE := [
+	"move_forward", "move_back", "move_left", "move_right",
+	"sprint", "crouch", "jump", "harvest", "throw_stone", "flashlight",
+]
+# action -> physical_keycode (hanya yang diubah player; sisanya pakai default project.godot)
+var keybinds: Dictionary = {}
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_ensure_buses()
 	load_settings()
 	apply_all()
+	apply_keybinds()
+
+# ===================== KEYBINDS =====================
+func apply_keybinds() -> void:
+	for action in keybinds:
+		if not InputMap.has_action(action):
+			continue
+		InputMap.action_erase_events(action)
+		var ev := InputEventKey.new()
+		ev.physical_keycode = int(keybinds[action]) as Key
+		InputMap.action_add_event(action, ev)
+
+func get_keycode_for(action: String) -> int:
+	if keybinds.has(action):
+		return int(keybinds[action])
+	if InputMap.has_action(action):
+		for ev in InputMap.action_get_events(action):
+			if ev is InputEventKey:
+				var k := ev as InputEventKey
+				return k.physical_keycode if k.physical_keycode != 0 else k.keycode
+	return 0
+
+func key_name_for(action: String) -> String:
+	var kc := get_keycode_for(action)
+	if kc == 0:
+		return "-"
+	return OS.get_keycode_string(kc)
+
+func set_keybind(action: String, keycode: int) -> void:
+	keybinds[action] = keycode
+	apply_keybinds()
+	save_settings()
 
 func _ensure_buses() -> void:
 	# Buat bus "Music" & "SFX" (kirim ke Master) bila belum ada.
@@ -79,6 +119,8 @@ func save_settings() -> void:
 	cfg.set_value("audio", "sfx", sfx_volume)
 	cfg.set_value("controls", "sensitivity", mouse_sensitivity)
 	cfg.set_value("video", "fullscreen", fullscreen)
+	for action in keybinds:
+		cfg.set_value("keybinds", action, int(keybinds[action]))
 	cfg.save(CONFIG_PATH)
 
 func load_settings() -> void:
@@ -90,3 +132,6 @@ func load_settings() -> void:
 	sfx_volume = float(cfg.get_value("audio", "sfx", sfx_volume))
 	mouse_sensitivity = float(cfg.get_value("controls", "sensitivity", mouse_sensitivity))
 	fullscreen = bool(cfg.get_value("video", "fullscreen", fullscreen))
+	if cfg.has_section("keybinds"):
+		for action in cfg.get_section_keys("keybinds"):
+			keybinds[action] = int(cfg.get_value("keybinds", action))

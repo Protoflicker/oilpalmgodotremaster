@@ -84,7 +84,7 @@ func _driver_flee() -> void:
 	driver_fled.emit()
 	var uis = get_tree().get_nodes_in_group("ui_manager")
 	if uis.size() > 0 and uis[0].has_method("show_notification"):
-		uis[0].show_notification("Sopir kabur! Penghuni kebun terlalu dekat mobil pickup!")
+		uis[0].show_notification(Loc.t("driver_fled"))
 
 func is_driver_present() -> bool:
 	return driver_present

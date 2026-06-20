@@ -55,6 +55,7 @@ const LEVEL_CONFIG := {
 		"boar_count": 2,
 		"snake_chance": 0.2,
 		"tiger_enabled": false,
+		"has_river": true,
 		"is_tutorial": false,
 	},
 	4: {
@@ -67,6 +68,7 @@ const LEVEL_CONFIG := {
 		"boar_count": 3,
 		"snake_chance": 0.3,
 		"tiger_enabled": true,
+		"has_river": true,
 		"is_tutorial": false,
 	},
 }
@@ -74,40 +76,40 @@ const LEVEL_CONFIG := {
 # Preset atmosfer per waktu hari (dipakai AtmosphereController).
 const TIME_PRESETS := {
 	"evening": {
-		"sun_energy": 0.9,
-		"sun_color": Color(1.0, 0.72, 0.45),
-		"ambient_energy": 0.45,
-		"ambient_color": Color(0.45, 0.38, 0.42),
-		"sky_exposure": 6.0,
-		"fog_density": 0.012,
-		"fog_color": Color(0.55, 0.42, 0.38),
+		"sun_energy": 1.1,
+		"sun_color": Color(1.0, 0.74, 0.48),
+		"ambient_energy": 0.7,
+		"ambient_color": Color(0.5, 0.42, 0.45),
+		"sky_exposure": 7.0,
+		"fog_density": 0.008,
+		"fog_color": Color(0.6, 0.46, 0.4),
 	},
 	"night": {
-		"sun_energy": 0.18,
-		"sun_color": Color(0.55, 0.62, 0.85),
-		"ambient_energy": 0.12,
-		"ambient_color": Color(0.10, 0.13, 0.22),
-		"sky_exposure": 1.4,
-		"fog_density": 0.03,
-		"fog_color": Color(0.07, 0.09, 0.16),
+		"sun_energy": 0.5,
+		"sun_color": Color(0.62, 0.7, 0.95),
+		"ambient_energy": 0.55,
+		"ambient_color": Color(0.22, 0.28, 0.42),
+		"sky_exposure": 3.6,
+		"fog_density": 0.014,
+		"fog_color": Color(0.16, 0.2, 0.3),
 	},
 	"midnight": {
-		"sun_energy": 0.08,
-		"sun_color": Color(0.45, 0.52, 0.78),
-		"ambient_energy": 0.06,
-		"ambient_color": Color(0.05, 0.07, 0.14),
-		"sky_exposure": 0.8,
-		"fog_density": 0.045,
-		"fog_color": Color(0.03, 0.05, 0.10),
+		"sun_energy": 0.36,
+		"sun_color": Color(0.55, 0.62, 0.9),
+		"ambient_energy": 0.4,
+		"ambient_color": Color(0.15, 0.19, 0.32),
+		"sky_exposure": 2.6,
+		"fog_density": 0.02,
+		"fog_color": Color(0.1, 0.13, 0.22),
 	},
 	"dawn": {
-		"sun_energy": 0.35,
-		"sun_color": Color(0.6, 0.6, 0.85),
-		"ambient_energy": 0.18,
-		"ambient_color": Color(0.18, 0.20, 0.30),
-		"sky_exposure": 2.4,
-		"fog_density": 0.028,
-		"fog_color": Color(0.18, 0.20, 0.32),
+		"sun_energy": 0.6,
+		"sun_color": Color(0.7, 0.7, 0.92),
+		"ambient_energy": 0.5,
+		"ambient_color": Color(0.28, 0.3, 0.42),
+		"sky_exposure": 4.0,
+		"fog_density": 0.013,
+		"fog_color": Color(0.3, 0.32, 0.44),
 	},
 }
 
@@ -115,9 +117,34 @@ var current_level: int = 1
 var total_money: int = 0
 var last_round_score: int = 0
 
+# Progres: level tertinggi yang sudah terbuka (level berikutnya terkunci sampai
+# level sebelumnya diselesaikan). Disimpan permanen ke disk.
+var unlocked_level: int = 1
+const PROGRESS_PATH := "user://progress.cfg"
+
 func _ready() -> void:
 	# Autoload harus tetap berjalan walau game di-pause (untuk transisi).
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_load_progress()
+
+func is_unlocked(level: int) -> bool:
+	return level <= unlocked_level
+
+func unlock_level(level: int) -> void:
+	var lv := clampi(level, 1, TOTAL_LEVELS)
+	if lv > unlocked_level:
+		unlocked_level = lv
+		_save_progress()
+
+func _save_progress() -> void:
+	var cfg := ConfigFile.new()
+	cfg.set_value("progress", "unlocked_level", unlocked_level)
+	cfg.save(PROGRESS_PATH)
+
+func _load_progress() -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(PROGRESS_PATH) == OK:
+		unlocked_level = int(cfg.get_value("progress", "unlocked_level", 1))
 
 func set_current_level(level: int) -> void:
 	current_level = clampi(level, 1, TOTAL_LEVELS)

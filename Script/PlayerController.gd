@@ -586,18 +586,28 @@ func play_tojok_animation():
 	tojok_shoot_tween.tween_property(tojok_node, "position", TOJOK_DEFAULT_POSITION, 0.2).set_delay(0.1)
 	tojok_shoot_tween.tween_property(tojok_node, "rotation_degrees", TOJOK_DEFAULT_ROTATION, 0.2).set_delay(0.1)
 
+const KETAPEL_RANGE: float = 60.0
+
 func shoot_ketapel():
-	if not is_ketapel_active() or shoot_timer > 0:
+	if not is_ketapel_active() or shoot_timer > 0 or not camera_node:
 		return
 	shoot_timer = SHOOT_COOLDOWN
 	play_ketapel_animation()
-	if raycast_node:
-		raycast_node.enabled = true
-		raycast_node.force_raycast_update()
-		if raycast_node.is_colliding():
-			var collider = raycast_node.get_collider()
-			handle_ketapel_collision(collider)
-		raycast_node.enabled = false
+
+	# Raycast konsisten dari tengah kamera ke arah pandang (hitscan), bukan RayCast3D anak
+	# yang state-nya bisa basi. Lebih akurat & stabil.
+	var space := get_world_3d().direct_space_state
+	var origin := camera_node.global_position
+	var dir := -camera_node.global_transform.basis.z
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + dir * KETAPEL_RANGE)
+	query.collision_mask = 0b111111
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	if player_body:
+		query.exclude = [player_body.get_rid()]
+	var hit := space.intersect_ray(query)
+	if hit:
+		handle_ketapel_collision(hit.collider)
 
 func handle_ketapel_collision(collider: Object):
 	if not collider:

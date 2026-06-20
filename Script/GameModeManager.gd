@@ -35,6 +35,7 @@ var pondok_scene: PackedScene = preload("res://Scene/Pondok.tscn")
 # Isi peta besar dengan pohon sawit tambahan agar terasa perkebunan yang luas & lebat.
 @export var extra_tree_count: int = 35
 var tree_scene: PackedScene = preload("res://Scene/Tree.tscn")
+var river_scene: PackedScene = preload("res://Scene/RiverBridge.tscn")
 
 # Konfigurasi level aktif (diambil dari GameState).
 var quota_kg: int = 0
@@ -78,6 +79,7 @@ func initialize_systems():
 	initialize_water_pool_system()
 	_scatter_hiding_bushes()
 	_fill_plantation()
+	_spawn_river()
 	start_round()
 
 func _load_level_config():
@@ -136,6 +138,9 @@ func apply_config_to_systems():
 				"patrol_speed": 3.0,
 				"sight_range": 18.0,
 				"fov_degrees": 100.0,
+				# Patroli seluruh peta (radius dari pusat peta), bukan hanya sekitar pondok.
+				"map_center": global_position,
+				"map_radius": maxf(hiding_bush_area.x * 0.45, 40.0),
 			})
 		if npc_manager.has_method("set_boar_config"):
 			if tiger_enabled:
@@ -164,38 +169,45 @@ func _scale_world():
 	if env and env is Node3D:
 		(env as Node3D).scale *= f
 
-	# Pohon: renggangkan jarak antar pohon, ukuran pohon tetap.
+	# PENTING: skala HANYA X/Z (jaga Y) supaya aset tidak melayang. Tanah uniform-scale
+	# tetap di ketinggian ~sama, jadi mempertahankan Y = posisi relatif ke tanah terjaga.
+
+	# Pohon: renggangkan jarak antar pohon, ukuran & ketinggian tetap.
 	var trees := root.get_node_or_null("Trees")
 	if trees and trees is Node3D:
-		(trees as Node3D).position *= f
+		_scale_xz(trees as Node3D, f)
 		for c in trees.get_children():
 			if c is Node3D:
-				(c as Node3D).position *= f
+				_scale_xz(c as Node3D, f)
 
-	# Zona ekstraksi (mobil pickup) → relokasi sesuai skala.
+	# Zona ekstraksi (mobil pickup) → relokasi X/Z, ketinggian dijaga (tidak melayang).
 	var dz := root.get_node_or_null("DeliveryZones")
 	if dz and dz is Node3D:
-		(dz as Node3D).position *= f
+		_scale_xz(dz as Node3D, f)
 		for c in dz.get_children():
 			if c is Node3D:
-				(c as Node3D).position *= f
+				_scale_xz(c as Node3D, f)
 
 	# Titik spawn musuh tersebar lebih jauh.
 	if npc_manager:
 		for m in npc_manager.manual_spawn_points:
 			if is_instance_valid(m):
-				m.position *= f
+				_scale_xz(m, f)
 
-	# Reposisi player + perbarui titik respawn-nya.
+	# Reposisi player (X/Z) + perbarui titik respawn-nya; Y dijaga agar jatuh ke tanah.
 	for p in get_tree().get_nodes_in_group("player"):
 		if p is Node3D:
 			var np := p as Node3D
-			np.global_position = Vector3(np.global_position.x * f, 6.0, np.global_position.z * f)
+			var wp := np.global_position
+			np.global_position = Vector3(wp.x * f, wp.y, wp.z * f)
 			np.set("respawn_position", np.global_position)
 
 	# Sebaran semak ikut melebar.
 	hiding_bush_area *= f
 	print("GameModeManager: dunia diperbesar x", f)
+
+func _scale_xz(n: Node3D, f: float) -> void:
+	n.position = Vector3(n.position.x * f, n.position.y, n.position.z * f)
 
 func _spawn_madman_house():
 	if not pondok_scene:
@@ -269,7 +281,7 @@ func _process(delta):
 
 	if remaining_time <= 0:
 		remaining_time = 0
-		_lose("Waktu habis! Sopir pergi tanpamu.")
+		_lose(Loc.t("time_up"))
 
 func _update_quota():
 	if not inventory_system:
@@ -282,7 +294,7 @@ func _update_quota():
 	if not quota_met and quota_kg > 0 and delivered >= quota_kg:
 		quota_met = true
 		if ui_manager and ui_manager.has_method("show_notification"):
-			ui_manager.show_notification("Kuota terpenuhi! Kembali ke mobil pickup untuk kabur.")
+			ui_manager.show_notification(Loc.t("quota_met"))
 
 func _check_win():
 	if not quota_met:
@@ -311,6 +323,8 @@ func _win():
 
 	var result := _calculate_score()
 	GameState.add_money(int(result["final_score"]))
+	# Buka level berikutnya (Next Level tetap terkunci sampai level ini diselesaikan).
+	GameState.unlock_level(level_number + 1)
 	round_ended_with_score.emit(int(result["final_score"]), result["details"])
 
 func _lose(reason: String):
@@ -520,6 +534,22 @@ func _fill_plantation():
 		placed_positions.append(pos)
 		placed += 1
 	print("GameModeManager: ", placed, " pohon tambahan disebar")
+
+func _spawn_river():
+	if not bool(_cfg.get("has_river", false)) or not river_scene:
+		return
+	var rb := river_scene.instantiate() as RiverBridge
+	if rb == null:
+		return
+	rb.length = maxf(hiding_bush_area.x * 0.9, 120.0)
+	rb.width = 16.0
+	get_tree().current_scene.add_child(rb)
+	# Band sungai menyilang peta (offset Z dari pusat), ditumpukan ke permukaan tanah.
+	var gx := global_position.x
+	var gz := global_position.z + hiding_bush_area.z * 0.22
+	var gpos := _ground_at(Vector3(gx, global_position.y, gz))
+	rb.global_position = Vector3(gx, gpos.y, gz)
+	print("GameModeManager: Sungai & jembatan ditempatkan di ", rb.global_position)
 
 func _random_ground_position(area: Vector3) -> Vector3:
 	var origin := global_position + Vector3(

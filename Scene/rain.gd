@@ -1,24 +1,28 @@
 extends GPUParticles3D
+## Hujan mengikuti player. Sebelumnya hanya mengikuti bila player_path di-set di scene
+## (tidak di-set) → hujan diam di satu petak peta besar. Sekarang cari player via group
+## sebagai fallback agar hujan selalu menyelimuti area di sekitar player.
 
-@export var player_path : NodePath
-var player : Node3D
+@export var player_path: NodePath
+var player: Node3D
 
 func _ready():
 	if player_path:
-		player = get_node(player_path)
-	
-	# --- SOLUSI 1: Agar Hujan Tidak Hilang di Sudut Tertentu ---
-	# Kita paksa kotak batas visibilitas (AABB) menjadi sangat besar (100x100x100 meter).
-	# Dengan ini, Godot akan selalu merender hujan meskipun kamu menengok ke langit atau ke bawah kaki.
-	visibility_aabb = AABB(Vector3(-50, -50, -50), Vector3(100, 100, 100))
+		player = get_node_or_null(player_path) as Node3D
+	if not player:
+		_find_player()
+	# AABB besar agar hujan tidak hilang saat menengok ke segala arah di peta besar.
+	visibility_aabb = AABB(Vector3(-90, -90, -90), Vector3(180, 180, 180))
 
-func _process(delta):
-	if player:
-		# Pindahkan posisi hujan ke posisi X dan Z player
-		global_position.x = player.global_position.x
-		global_position.z = player.global_position.z
-		
-		# --- SOLUSI 2: Agar Hujan Tidak Spawn Terlalu Bawah ---
-		# Naikkan nilainya. 10.0 mungkin terlalu dekat dengan kepala jika kamera jauh.
-		# Coba ubah jadi 15.0 atau 20.0.
-		global_position.y = player.global_position.y + 15.0
+func _find_player() -> void:
+	var ps := get_tree().get_nodes_in_group("player")
+	if ps.size() > 0:
+		player = ps[0]
+
+func _process(_delta):
+	if not player or not is_instance_valid(player):
+		_find_player()
+		return
+	global_position.x = player.global_position.x
+	global_position.z = player.global_position.z
+	global_position.y = player.global_position.y + 15.0

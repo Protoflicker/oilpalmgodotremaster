@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dns4udu0be505"]
+
+[ext_resource type="Script" path="res://Script/RiverBridge.gd" id="1_river"]
+
+[node name="RiverBridge" type="Node3D"]
+script = ExtResource("1_river")

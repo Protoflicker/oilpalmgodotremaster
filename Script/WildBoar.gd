@@ -268,7 +268,7 @@ func perform_attack():
 	await get_tree().create_timer(0.3).timeout
 	
 	# GDD: serangan satwa liar = game over langsung (tanpa sistem health).
-	var reason: String = "Diterkam harimau!" if is_tiger else "Diterkam babi hutan liar!"
+	var reason: String = Loc.t("killed_tiger") if is_tiger else Loc.t("killed_boar")
 	if player_node.has_method("catch"):
 		player_node.catch(reason)
 	elif player_node.has_method("take_damage"):

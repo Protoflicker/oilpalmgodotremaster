@@ -175,7 +175,7 @@ func deliver_fruits():
 	# GDD: kalau sopir sudah kabur, buah tak bisa disetor lagi.
 	if current_delivery_zone.has_method("is_driver_present") and not current_delivery_zone.is_driver_present():
 		if ui_manager:
-			ui_manager.show_interaction_label("Sopir sudah kabur, tak bisa setor buah lagi!")
+			ui_manager.show_interaction_label(Loc.t("driver_gone"))
 		return false
 
 	if carried_ripe_fruits > 0:

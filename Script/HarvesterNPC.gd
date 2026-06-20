@@ -39,6 +39,10 @@ var patrol_points: Array[Vector3] = []
 var home_position: Vector3 = Vector3.ZERO
 const PATROL_WANDER_RADIUS: float = 18.0
 
+# Patroli seluruh peta (bukan hanya sekitar pondok). Diisi GameModeManager.
+var map_center: Vector3 = Vector3.ZERO
+var map_radius: float = 60.0
+
 var stuck_timer: float = 0.0
 var stuck_check_position: Vector3 = Vector3.ZERO
 const STUCK_THRESHOLD: float = 2.0
@@ -355,7 +359,7 @@ func _catch_player() -> void:
 	if player_node.has_method("face_threat"):
 		player_node.face_threat(global_position + Vector3.UP * 1.6)
 	if player_node.has_method("catch"):
-		player_node.catch("Tertangkap penghuni kebun!")
+		player_node.catch(Loc.t("caught_madman"))
 
 func _look_around(delta: float) -> void:
 	# Putar perlahan untuk memindai area.
@@ -390,13 +394,14 @@ func check_if_stuck(delta: float, on_stuck: Callable) -> void:
 		on_stuck.call()
 
 func pick_new_patrol_target() -> void:
-	if patrol_points.size() > 0:
+	# Patroli SELURUH peta: campuran "determined" (titik patroli tetap) & "random"
+	# (titik acak di mana pun di peta), bukan sekadar berputar di sekitar pondok.
+	if patrol_points.size() > 0 and randf() < 0.4:
 		patrol_target = patrol_points[randi() % patrol_points.size()]
 		return
-	# Wander acak di sekitar home.
 	var angle := randf() * TAU
-	var radius := randf_range(4.0, PATROL_WANDER_RADIUS)
-	patrol_target = home_position + Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
+	var radius := randf_range(map_radius * 0.12, map_radius)
+	patrol_target = map_center + Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
 
 # ========================= TRANSITIONS =========================
 func transition_to_state(new_state: NPCState) -> void:
@@ -472,5 +477,7 @@ func configure(cfg: Dictionary) -> void:
 	sight_range = cfg.get("sight_range", sight_range)
 	fov_degrees = cfg.get("fov_degrees", fov_degrees)
 	has_flashlight = cfg.get("has_flashlight", has_flashlight)
+	map_radius = cfg.get("map_radius", map_radius)
+	map_center = cfg.get("map_center", map_center)
 	if has_flashlight and not flashlight:
 		_setup_flashlight()

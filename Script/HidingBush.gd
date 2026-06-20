@@ -38,12 +38,12 @@ func _maybe_snake(body: Node) -> void:
 	if randf() > snake_chance:
 		return
 
-	# Peringatan singkat sebelum gigitan — beri kesempatan player kabur.
+	# Peringatan 2 detik sebelum gigitan — beri waktu player bereaksi & kabur dari semak.
 	var uis = get_tree().get_nodes_in_group("ui_manager")
 	if uis.size() > 0 and uis[0].has_method("show_notification"):
-		uis[0].show_notification("Ssshh... ada yang bergerak di semak! Cepat menjauh!")
+		uis[0].show_notification(Loc.t("snake_warn"))
 
-	await get_tree().create_timer(1.4).timeout
+	await get_tree().create_timer(2.0).timeout
 	if is_instance_valid(self) and player_inside == body and is_instance_valid(body):
 		if body.has_method("catch"):
-			body.catch("Digigit ular di semak-semak!")
+			body.catch(Loc.t("snake_bite"))
